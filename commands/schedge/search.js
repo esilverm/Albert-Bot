@@ -34,7 +34,7 @@ const generateEmbed = (course, index, total) => ({
 });
 
 module.exports = {
-  name: "schedge",
+  name: "search",
   type: "schedge",
   description: "Search for NYU courses",
   cooldown: 30,
