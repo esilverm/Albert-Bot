@@ -77,7 +77,7 @@ module.exports = {
   name: "help",
   type: "utils",
   description: "Get a list of usable commands for the bot.",
-  cooldown: 2,
+  cooldown: 1,
   args: false,
   usage: "<?command>",
   execute: async (message, args) => {

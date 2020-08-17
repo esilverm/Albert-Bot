@@ -37,7 +37,7 @@ module.exports = {
   name: "search",
   type: "schedge",
   description: "Search for NYU courses",
-  cooldown: 30,
+  cooldown: 5,
   args: true,
   usage: "<year> <semester-code: [su, fa, sp, ja]> <query>",
   execute: async (message, args) => {

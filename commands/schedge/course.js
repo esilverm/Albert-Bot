@@ -117,7 +117,7 @@ module.exports = {
   type: "schedge",
   aliases: ["c"],
   description: "Get the sections for a course",
-  cooldown: 30,
+  cooldown: 5,
   args: true,
   usage: "<year> <semester-code: [su, fa, sp, ja]> <subject>-<school> <code>",
   execute: async (message, args) => {
