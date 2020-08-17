@@ -31,7 +31,7 @@ module.exports = {
   name: "schedge",
   type: "schedge",
   description: "Search for NYU courses",
-  cooldown: 10,
+  cooldown: 30,
   args: true,
   usage: "<year> <semester-code: [su, fa, sp, ja]> <query>",
   execute: async (message, args) => {
@@ -52,6 +52,18 @@ module.exports = {
           limit: 10,
         },
       });
+      console.log(data);
+
+      if (data.length === 0) {
+        message.channel.send({
+          embed: {
+            color: 0xcf000e,
+            description: "Sorry, I can't find any courses for this search.",
+          },
+        });
+        return;
+      }
+
       const msg = await message.channel.send({
         embed: generateEmbed(data[currentPage], currentPage + 1, data.length),
       });
@@ -103,10 +115,13 @@ module.exports = {
         await msg.edit({ content: "This message is now inactive", embed });
       });
     } catch (error) {
-      message.channel.send("An unexpected error occured. Try again later");
+      message.channel.send({
+        embed: {
+          color: 0xcf000e,
+          description: "An unexpected error occurred. Please try again later.",
+        },
+      });
       console.log(error);
     }
   },
 };
-
-// #57068c
