@@ -9,11 +9,19 @@ const generateMainEmbed = () => ({
   fields: [
     {
       name: "🗓 Schedge",
-      value: "`schedge`, `course`",
+      value: commands
+        .filter((c) => c.type === "schedge")
+        .map((command) => `\`${command.name}\``)
+        .join(" , "),
     },
     {
       name: "🔧 Utility",
-      value: "`help`",
+      value: [
+        "`help`",
+        ...commands
+          .filter((c) => c.type === "utility")
+          .map((command) => `\`${command.name}\``),
+      ].join(" , "),
     },
   ],
 });
