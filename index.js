@@ -15,6 +15,12 @@ const cooldowns = new Discord.Collection();
 
 client.once("ready", () => {
   console.log("Ready!");
+  client.user.setPresence({
+    activity: {
+      name: `${prefix}help`,
+      type: `LISTENING`,
+    },
+  });
 });
 
 client.on("message", (message) => {
