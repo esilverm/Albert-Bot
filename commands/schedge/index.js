@@ -5,7 +5,7 @@ const { stripIndents } = require("common-tags");
 const nextPageEmoji = "▶️";
 const prevPageEmoji = "◀️";
 
-const generateEmbed = (course) => ({
+const generateEmbed = (course, index, total) => ({
   color: 0x57068c,
   title: `${course.subjectCode.code}-${course.subjectCode.school} ${course.deptCourseId} ${course.name}`,
   description: course.description,
@@ -22,6 +22,9 @@ const generateEmbed = (course) => ({
         }))
       : [{ name: "Sections", value: course.sections.length }],
   timestamp: new Date(),
+  footer: {
+    text: `Course ${index}/${total}`,
+  },
 });
 
 module.exports = {
@@ -50,7 +53,7 @@ module.exports = {
         },
       });
       const msg = await message.channel.send({
-        embed: generateEmbed(data[currentPage]),
+        embed: generateEmbed(data[currentPage], currentPage + 1, data.length),
       });
 
       const collector = msg.createReactionCollector(filter, {
@@ -68,7 +71,11 @@ module.exports = {
         } else {
           currentPage = currentPage > 0 ? currentPage - 1 : data.length - 1;
         }
-        const embed = generateEmbed(data[currentPage]);
+        const embed = generateEmbed(
+          data[currentPage],
+          currentPage + 1,
+          data.length
+        );
         await msg.edit({ embed });
       });
 
@@ -78,12 +85,20 @@ module.exports = {
         } else {
           currentPage = currentPage > 0 ? currentPage - 1 : data.length - 1;
         }
-        const embed = generateEmbed(data[currentPage]);
+        const embed = generateEmbed(
+          data[currentPage],
+          currentPage + 1,
+          data.length
+        );
         await msg.edit({ embed });
       });
 
       collector.on("end", async () => {
-        const embed = generateEmbed(data[currentPage]);
+        const embed = generateEmbed(
+          data[currentPage],
+          currentPage + 1,
+          data.length
+        );
         embed.color = 6381923;
         await msg.edit({ content: "This message is now inactive", embed });
       });
