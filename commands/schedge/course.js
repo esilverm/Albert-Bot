@@ -34,11 +34,6 @@ const generateEmbed = (
     },
     {
       name: "Status",
-      value: sections[index - 1].status,
-      inline: true,
-    },
-    {
-      name: "Status",
       value:
         sections[index - 1].status === "WaitList"
           ? `Waitlist (${sections[index - 1].waitlistTotal})`
