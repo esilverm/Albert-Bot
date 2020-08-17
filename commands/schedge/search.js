@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 const axios = require("axios");
 const { stripIndents } = require("common-tags");
 

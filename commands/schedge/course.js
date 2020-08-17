@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 const axios = require("axios");
 const { stripIndents } = require("common-tags");
 const dateFormat = require("dateformat");
@@ -15,7 +14,7 @@ const generateEmbed = (
   title: `${subjectCode.code}-${subjectCode.school} ${deptCourseId}.${
     sections[index - 1].code
   } ${sections[index - 1].name}`,
-  description: description,
+  description,
   fields: [
     {
       name: "Registration Number",
@@ -115,7 +114,7 @@ const generateEmbed = (
 
 module.exports = {
   name: "course",
-  type: "course",
+  type: "schedge",
   aliases: ["c"],
   description: "Get the sections for a course",
   cooldown: 30,
