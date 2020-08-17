@@ -100,8 +100,8 @@ const generateEmbed = (
           {
             name: "Recitations",
             value: sections[index - 1].recitations
-              ? "0"
-              : sections[index - 1].recitations.length,
+              ? sections[index - 1].recitations.length
+              : "0",
             inline: true,
           },
         ]
