@@ -11,15 +11,22 @@ const generateEmbed = (course, index, total) => ({
   description: course.description,
   fields:
     course.sections.length <= 10
-      ? course.sections.map((section) => ({
-          name: `${course.subjectCode.code}-${course.subjectCode.school} ${course.deptCourseId}.${section.code}`,
-          value: stripIndents`
+      ? [
+          { name: "Sections", value: "\u200b" },
+          ...course.sections.map((section) => ({
+            name: `${course.subjectCode.code}-${course.subjectCode.school} ${course.deptCourseId}.${section.code}`,
+            value: stripIndents`
             Professor(s): ${section.instructors.join(", ")}
-            Status: ${section.status}
+            Status: ${
+              section.status === "WaitList"
+                ? `Waitlist (${section.waitlistTotal})`
+                : section.status
+            }
             Instruction: ${section.instructionMode}
           `,
-          inline: true,
-        }))
+            inline: true,
+          })),
+        ]
       : [{ name: "Sections", value: course.sections.length }],
   timestamp: new Date(),
   footer: {
@@ -52,7 +59,6 @@ module.exports = {
           limit: 10,
         },
       });
-      console.log(data);
 
       if (data.length === 0) {
         message.channel.send({
