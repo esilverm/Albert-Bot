@@ -8,6 +8,13 @@ const generateMainEmbed = () => ({
   color: 0x57068c,
   fields: [
     {
+      name: "📣 Announce",
+      value: commands
+        .filter((c) => c.type === "announce")
+        .map((command) => `\`${command.name}\``)
+        .join(" , "),
+    },
+    {
       name: "🗓 Schedge",
       value: commands
         .filter((c) => c.type === "schedge")
