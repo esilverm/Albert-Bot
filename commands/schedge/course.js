@@ -119,9 +119,34 @@ module.exports = {
   description: "Get the sections for a course",
   cooldown: 5,
   args: true,
-  usage: "<year> <semester-code: [su, fa, sp, ja]> <subject>-<school> <code>",
+  usage: "[<year> <semester-code: [su, fa, sp, ja]>] <subject>-<school> <code>",
   execute: async (message, args) => {
-    const [year, semester, schoolCode, deptCourseId] = args;
+    let year, semester, schoolCode, deptCourseId;
+    if (args.length >= 4){
+      [year, semester, schoolCode, deptCourseId] = args;
+    }
+    //try to auto-detect current year and semester
+    else if (args.length >= 2){
+      [schoolCode, deptCourseId] = args;
+      year = new Date().getFullYear();
+      month = new Date().getMonth();
+      //Jan
+      if (month == 0){
+        semester = "ja";
+      }
+      //Feb-May
+      else if (month <= 4){
+        semester = "sp";
+      }
+      //Jun-Aug
+      else if (month <= 7){
+        semester = "su";
+      }
+      //Sep-Dec
+      else{
+        semester = "fa";
+      }
+    }
     const filter = (reaction, user) =>
       (reaction.emoji.name === nextPageEmoji ||
         reaction.emoji.name === prevPageEmoji) &&
