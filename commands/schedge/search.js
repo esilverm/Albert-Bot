@@ -39,9 +39,36 @@ module.exports = {
   description: "Search for NYU courses",
   cooldown: 5,
   args: true,
-  usage: "<year> <semester-code: [su, fa, sp, ja]> <query>",
+  usage: "[<year> <semester-code: [su, fa, sp, ja]>] <query>",
   execute: async (message, args) => {
-    const [year, semester, ...query] = args;
+    let year, semester, query;
+    if (args.length >= 3
+      && args[0].match(/[0-9]{4}/) != null
+      && ["ja", "sp", "su", "fa"].indexOf(args[1]) != -1){
+      [year, semester, ...query] = args;
+    }
+    //try to auto-detect current year and semester
+    else if (args.length >= 2){
+      [...query] = args;
+      year = new Date().getFullYear();
+      month = new Date().getMonth();
+      //Jan
+      if (month == 0){
+        semester = "ja";
+      }
+      //Feb-May
+      else if (month <= 4){
+        semester = "sp";
+      }
+      //Jun-Aug
+      else if (month <= 7){
+        semester = "su";
+      }
+      //Sep-Dec
+      else{
+        semester = "fa";
+      }
+    }
     const filter = (reaction, user) =>
       (reaction.emoji.name === nextPageEmoji ||
         reaction.emoji.name === prevPageEmoji) &&
