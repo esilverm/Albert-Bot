@@ -165,7 +165,7 @@ module.exports = {
       });
       const course = data.filter((c) => c.deptCourseId === deptCourseId)[0];
       // console.log(course);
-      if (course.sections.length === 0) {
+      if (!course || course.sections.length === 0) {
         message.channel.send({
           embed: {
             color: 0xcf000e,
